@@ -12,14 +12,14 @@ def scrape_all():
     # Run all scraping functions and store results in dict
     data = {
         "news_title": news_title,
-        "news_paragraph": news_pargraph,
+        "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now()
     }
 
     # Stop webdriver and return data
-    browser.quiet()
+    browser.quit()
     return data
 
 def mars_news(browser):
@@ -36,7 +36,7 @@ def mars_news(browser):
 
     # Add try/except for error handling
     try:
-        slide_elem = news_soup.select_one('ul.item_list li.slide"')
+        slide_elem = news_soup.select_one('ul.item_list li.slide')
         # Use parent element to find first 'a' tag and save as 'news_title'
         news_title = slide_elem.find("div", class_="content_title").get_text()
         # Use the parent element to find paragraph text
