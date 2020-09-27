@@ -15,7 +15,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(), 
+        "hemispheres": hemisphere_data()
     }
 
     # Stop webdriver and return data
@@ -46,6 +47,8 @@ def mars_news(browser):
         return None, None 
 
     return news_title, news_p
+
+    # Scrape Mars hemisphere images & titles
 
 # ### Featured Image
 def featured_image(browser):
@@ -93,7 +96,56 @@ def mars_facts():
     df.set_index('description', inplace=True)
 
     # Convert dataframe to HTML format, add bootstrap
-    return df.to_html()
+    return df.to_html()(classes="table table-striped")
+
+# Scrape URL/title for each hemisphere image
+def hemisphere_data():
+    try:
+        hemisphere_image_urls = []
+        page_dictionary = {
+            "hemisphere": title,
+            "url": img_url
+        }
+        
+        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+        browser.visit(url)
+        html = browser.html
+        image_soup = soup(html, 'html.parser')
+        title = image_soup.find('h2').get_text()
+        img = image_soup.find_all('img')[5]["src"]
+        img_url = url + img
+        hemisphere_image_urls.append(page_dictionary)
+        
+        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+        browser.visit(url)
+        html = browser.html
+        image_soup = soup(html, 'html.parser')
+        title = image_soup.find('h2').get_text()
+        img = image_soup.find_all('img')[5]["src"]
+        img_url = url + img
+        hemisphere_image_urls.append(page_dictionary)
+
+        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+        browser.visit(url)
+        html = browser.html
+        image_soup = soup(html, 'html.parser')
+        title = image_soup.find('h2').get_text()
+        img = image_soup.find_all('img')[5]["src"]
+        img_url = url + img
+        hemisphere_image_urls.append(page_dictionary)
+
+        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+        browser.visit(url)
+        html = browser.html
+        image_soup = soup(html, 'html.parser')
+        title = image_soup.find('h2').get_text()
+        img = image_soup.find_all('img')[5]["src"]
+        img_url = url + img
+        hemisphere_image_urls.append(page_dictionary)
+    except AttributeError:
+        return None
+
+    return hemisphere_image_urls
 
 if __name__ == "__main__":
     # If running as script, print scraped data
