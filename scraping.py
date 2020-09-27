@@ -100,50 +100,47 @@ def mars_facts():
 
 # Scrape URL/title for each hemisphere image
 def hemisphere_data():
-    try:
-        hemisphere_image_urls = []
-        page_dictionary = {
-            "hemisphere": title,
-            "url": img_url
-        }
-        
-        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
-        browser.visit(url)
-        html = browser.html
-        image_soup = soup(html, 'html.parser')
-        title = image_soup.find('h2').get_text()
-        img = image_soup.find_all('img')[5]["src"]
-        img_url = url + img
-        hemisphere_image_urls.append(page_dictionary)
-        
-        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
-        browser.visit(url)
-        html = browser.html
-        image_soup = soup(html, 'html.parser')
-        title = image_soup.find('h2').get_text()
-        img = image_soup.find_all('img')[5]["src"]
-        img_url = url + img
-        hemisphere_image_urls.append(page_dictionary)
+    hemisphere_image_urls = []
+    page_dictionary = {
+        "title": title,
+        "url": img_url
+    }
+    
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+    browser.visit(url)
+    html = browser.html
+    image_soup = soup(html, 'html.parser')
+    title = image_soup.find('h2').get_text()
+    img = image_soup.find_all('img')[5]["src"]
+    img_url = url + img
+    hemisphere_image_urls.append(page_dictionary)
+    
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+    browser.visit(url)
+    html = browser.html
+    image_soup = soup(html, 'html.parser')
+    title = image_soup.find('h2').get_text()
+    img = image_soup.find_all('img')[5]["src"]
+    img_url = url + img
+    hemisphere_image_urls.append(page_dictionary)
 
-        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
-        browser.visit(url)
-        html = browser.html
-        image_soup = soup(html, 'html.parser')
-        title = image_soup.find('h2').get_text()
-        img = image_soup.find_all('img')[5]["src"]
-        img_url = url + img
-        hemisphere_image_urls.append(page_dictionary)
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+    browser.visit(url)
+    html = browser.html
+    image_soup = soup(html, 'html.parser')
+    title = image_soup.find('h2').get_text()
+    img = image_soup.find_all('img')[5]["src"]
+    img_url = url + img
+    hemisphere_image_urls.append(page_dictionary)
 
-        url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
-        browser.visit(url)
-        html = browser.html
-        image_soup = soup(html, 'html.parser')
-        title = image_soup.find('h2').get_text()
-        img = image_soup.find_all('img')[5]["src"]
-        img_url = url + img
-        hemisphere_image_urls.append(page_dictionary)
-    except AttributeError:
-        return None
+    url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+    browser.visit(url)
+    html = browser.html
+    image_soup = soup(html, 'html.parser')
+    title = image_soup.find('h2').get_text()
+    img = image_soup.find_all('img')[5]["src"]
+    img_url = url + img
+    hemisphere_image_urls.append(page_dictionary)
 
     return hemisphere_image_urls
 
